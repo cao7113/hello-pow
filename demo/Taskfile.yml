@@ -1,0 +1,34 @@
+# https://taskfile.dev
+version: '2'
+tasks:
+  load-lobster:
+    desc: download lobster.ru from rack repository
+    cmds:
+      - curl -sSL https://github.com/rack/rack/raw/master/example/lobster.ru > config.ru
+
+  setup:
+    cmds:
+      - bundle install
+
+  restart:
+    cmds:
+      - touch tmp/restart.txt
+
+  link:
+    status:
+      - test -L ~/.pow/demo
+    cmds:
+      - ln -s ~/dev/hello-pow/demo ~/.pow/demo
+      - ls -l ~/.pow/
+  unlink:
+    cmds:
+      # todo shuntdown if exited
+      - rm -f ~/.pow/demo
+      - ls -l ~/.pow/
+  run:
+    cmds:
+      - rackup
+
+  demo:
+    cmds:
+      - open http://demo.127.0.0.1.xip.io/

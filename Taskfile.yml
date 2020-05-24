@@ -7,4 +7,8 @@ tasks:
       - curl get.pow.cx | sh
   show-script:
     cmds:
-      - curl get.pow.cx
+      - curl get.pow.cx 
+  missing-app:
+    desc: show help when missing deployed app
+    cmds:
+      - open http://missing.127.0.0.1.xip.io/
