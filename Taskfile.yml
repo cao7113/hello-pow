@@ -3,12 +3,56 @@ version: '2'
 tasks:
   install:
     desc: install or upgrade Pow by http://pow.cx/
+    # The installer unpacks the latest Pow version into ~/Library/Application Support/Pow/Versions and points the ~/Library/Application Support/Pow/Current symlink there. It also installs launchd scripts for your user (the Pow server itself) and for the system (to set up the ipfw rule), if necessary. Then it boots the server.
     cmds:
       - curl get.pow.cx | sh
-  show-script:
+  uninstall:
     cmds:
-      - curl get.pow.cx 
+      - curl get.pow.cx/uninstall.sh | sh
+      
   missing-app:
     desc: show help when missing deployed app
+    # If you attempt to access a domain that Pow doesn't understand, like http://localhost/, you'll see a page letting you know that Pow is installed and working correctly, with instructions on how to set up an application. 
     cmds:
       - open http://missing.127.0.0.1.xip.io/
+  
+  demo:
+    cmds:
+      - cd demo && task demo
+
+  link-log:
+    status:
+      - test -L local-pow-logs
+    cmds:
+      - ln -s ~/Library/Logs/Pow/ local-pow-logs
+
+  link-powconfig:
+    status:
+      - test -L  ~/.powconfig
+    desc: config by http://pow.cx/docs/configuration.html#section-5
+    cmds:
+      - ln -s ~/dev/hello-pow/dot.powconfig ~/.powconfig
+
+  info:
+    desc: show Pow info
+    cmds: 
+      - curl -s -H host:pow localhost/status.json | jq
+      - curl -s -H host:pow localhost/env.json | jq
+      - curl -s -H host:pow localhost/config.json | jq
+
+  restart:
+    desc: Pow runs as a Mac OS X Launch Agent. If the Pow server process terminates, the OS will restart it automatically.
+    #  You may need to manually restart Pow if you make configuration changes to ~/.powconfig or modify your login environment. To tell Pow to quit and restart, touch the global restart.txt file:
+    cmds:
+      - touch ~/.pow/restart.txt
+
+  # tools
+  install-tools:
+    cmds:
+      # https://github.com/powder-rb/powder#readme
+      - gem install powder
+      # DEPRECATED 
+      # - gem install powify
+      # - gem install forward
+
+  # in future: https://github.com/puma/puma-dev#readme

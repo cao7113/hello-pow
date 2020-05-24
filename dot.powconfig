@@ -1,0 +1,4 @@
+# default 15 minutes = 15 * 60 = 900
+export POW_TIMEOUT=1800
+# number of worker process for an app
+#export POW_WORKERS=3

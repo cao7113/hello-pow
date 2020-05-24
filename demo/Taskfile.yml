@@ -4,7 +4,7 @@ tasks:
   load-lobster:
     desc: download lobster.ru from rack repository
     cmds:
-      - curl -sSL https://github.com/rack/rack/raw/master/example/lobster.ru > config.ru
+      - curl -sSL https://github.com/rack/rack/raw/master/example/lobster.ru > lobster.ru
 
   setup:
     cmds:
@@ -32,3 +32,4 @@ tasks:
   demo:
     cmds:
       - open http://demo.127.0.0.1.xip.io/
+      # - open http://demo.127.0.0.1.xip.io/hello.html
