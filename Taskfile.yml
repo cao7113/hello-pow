@@ -1,0 +1,10 @@
+# https://taskfile.dev
+version: '2'
+tasks:
+  install:
+    desc: install or upgrade Pow by http://pow.cx/
+    cmds:
+      - curl get.pow.cx | sh
+  show-script:
+    cmds:
+      - curl get.pow.cx
