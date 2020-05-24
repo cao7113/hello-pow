@@ -13,6 +13,8 @@ tasks:
   restart:
     cmds:
       - touch tmp/restart.txt
+      # or
+      # - powder restart
 
   link:
     status:

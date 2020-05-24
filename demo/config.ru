@@ -3,4 +3,8 @@
 lines = []
 lines << 'Hi pow'
 lines << " at #{Time.now}"
-run ->(_env) { [200, {}, lines] }
+lmd = ->(env) {
+  lines << " env RACK_ENV=#{env['RACK_ENV']}"
+  [200, {}, lines] 
+}
+run lmd
